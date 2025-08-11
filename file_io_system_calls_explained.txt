@@ -1,0 +1,142 @@
+---
+
+## **1. Buffer**
+
+* A **buffer** is simply a temporary storage area in memory.
+* In file I/O, a buffer holds data **before** it’s read from or written to a file.
+* Example:
+
+  * When you use `read()`, data from the file is copied into a buffer in your program.
+  * When you use `write()`, data from your program’s buffer is copied into kernel buffers before going to disk.
+
+---
+
+## **2. User Space**
+
+* **User space** is the part of memory where your **application** runs.
+* Programs here **cannot directly access hardware** — they must ask the kernel to do it.
+* Safer: prevents buggy programs from crashing the whole system.
+
+---
+
+## **3. Kernel Space**
+
+* **Kernel space** is the memory where the **operating system’s core** runs.
+* It has **full access** to hardware and system resources.
+* Only the kernel can directly communicate with devices like disks, networks, etc.
+* Programs can only interact with kernel space through **system calls**.
+
+---
+
+## **4. User-Space Buffer**
+
+* A **user-space buffer** is a block of memory in **your program** (user space) used to hold data temporarily.
+* Example:
+
+  ```c
+  char buffer[100]; // This is a user-space buffer
+  read(fd, buffer, 100);
+  ```
+* Here, `buffer` is in **your application’s memory**, and the kernel will copy data into it.
+
+---
+
+## **5. Kernel-Space Buffer**
+
+* A **kernel-space buffer** is inside the operating system.
+* The kernel uses it to temporarily store data coming from or going to hardware.
+* Why?
+
+  * Reading/writing directly to disk for every small piece of data would be very slow.
+  * So, the kernel batches data in kernel buffers to improve speed.
+
+---
+
+## **6. Open File Table**
+
+* When you open a file with `open()`, Linux creates an entry in the **system-wide open file table**.
+* This table contains:
+
+  * File position (offset)
+  * Access mode (read/write)
+  * Reference to the file’s **inode** or metadata
+* Each process also has its own **per-process file descriptor table** pointing to these open file table entries.
+
+---
+
+## **7. File Structure**
+
+* In the kernel, a **file structure** is a C struct (`struct file`) used to represent an open file.
+* It stores:
+
+  * Current position in the file
+  * Flags (read-only, write-only, etc.)
+  * Pointer to file operations (read, write functions)
+  * Link to the file’s metadata (inode/FCB)
+
+---
+
+## **8. File Descriptor**
+
+* A **file descriptor (FD)** is just an **integer** that your program uses to refer to an open file.
+
+* Example:
+
+  ```
+  int fd = open("file.txt", O_RDONLY);
+  ```
+
+  If `fd` is 3, then when you call:
+
+  ```
+  read(fd, buffer, size);
+  ```
+
+  the kernel knows exactly which file you mean by looking at your process’s file descriptor table.
+
+* Standard FDs:
+
+  * `0` = Standard Input (stdin)
+  * `1` = Standard Output (stdout)
+  * `2` = Standard Error (stderr)
+
+---
+
+## **9. FCB (File Control Block)**
+
+* The **File Control Block** is a data structure on disk that stores metadata about the file:
+
+  * File name
+  * File size
+  * Permissions
+  * Timestamps
+  * Disk block locations
+* In Linux, this concept is implemented as the **inode**.
+
+---
+
+## **10. `0644` in the Code**
+
+* `0644` is an **octal number** that sets file permissions when creating a new file (used in `open()` when `O_CREAT` is specified).
+* Format: `0XYZ`
+
+  * `X` = Owner permissions
+  * `Y` = Group permissions
+  * `Z` = Other users’ permissions
+* Each digit is the sum of:
+
+  * `4` → read
+  * `2` → write
+  * `1` → execute
+* `0644` means:
+
+  * Owner: `6` → read (4) + write (2) = read & write
+  * Group: `4` → read only
+  * Others: `4` → read only
+
+---
+
+If you want, I can **draw a diagram** showing how **user space buffers, kernel buffers, file descriptors, and the open file table** all connect when you do a `write()` in your C program.
+It’ll make this much easier to visualize.
+
+Do you want me to draw that for you?

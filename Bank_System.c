@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "Bank_System.h"
 
 void Bank_System()
@@ -17,7 +19,7 @@ void Bank_System()
             // signInUserAccount();
             break;
         case 2:
-            // signUpUserAccount();
+            signUpUserAccount();
             break;
         default:
             printf("You entered three invalid inputs\nTerminating..\n");
@@ -57,10 +59,42 @@ char selectAuthenticationOption()
     return 0; // FAILED
 }
 
+
 // void signInUserAccount()
 // {
 // }
 
-// void signUpUserAccount()
-// {
-// }
+
+void signUpUserAccount()
+{
+    char firstName[30];
+    char lastName[30];
+    char username[30];
+    char password[30];
+    char confirmPassword[30];
+
+    printf("%s", "Enter your first name: ");
+    scanf("%29s", firstName);
+
+    printf("%s", "Enter your last nane: ");
+    scanf("%29s", lastName);
+
+    printf("%s", "Enter your username: ");
+    scanf("%29s", username);
+
+    printf("%s", "Enter your password: ");
+    scanf("%29s", password);
+
+    printf("%s", "Confirm your password: ");
+    scanf("%29s", confirmPassword);
+
+    if(strcmp(password, confirmPassword) == 0)
+    {
+        puts("Registration Done!");
+    }
+    else
+    {
+        puts("Passwords do not match");
+        return;
+    }
+}

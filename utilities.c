@@ -14,7 +14,7 @@ bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsig
         bool isValid = false;
         switch (validationRule)
         {
-            case RULE_AUTH_CHOICE_NUMBER:
+            case RULE_OPTION_CHOICE_NUMBER:
                 isValid = (*(char *)input == 1 || *(char *)input == 2 || *(char *)input == 3);
                 break;
             case RULE_PASSWORD_MATCH:

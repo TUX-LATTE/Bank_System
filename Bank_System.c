@@ -49,7 +49,7 @@ char selectAuthenticationOption()
     }
     else
     {
-        if(retryInput(&choiceNumber, "%hhd", RULE_AUTH_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
+        if(retryInput(&choiceNumber, "%hhd", RULE_OPTION_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
         {
             return choiceNumber;
         }
@@ -94,7 +94,9 @@ void signUpUserAccount()
 
     if(strcmp(newUser.password, confirmPassword) == 0)
     {
-        puts("Registration Done!");
+        registerationSuccess:
+            puts("Registration Done!");
+            bankOperations();
     }
     else
     {
@@ -102,12 +104,62 @@ void signUpUserAccount()
         
         if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, newUser.password))
         {
-            puts("Registration Done!");
+            goto registerationSuccess;
         }
         else
         {
             printf("You entered three invalid inputs\nTerminating..\n");
             return;
+        }
+    }
+}
+
+
+void bankOperations()
+{
+    puts("\n");
+
+    double accountBalance = 0;
+    while(1)
+    {
+        char operationChoice;
+        char *msg = "Invalid option, please try again";
+
+        printf("Select Operation:\n1. Deposit\n2. Withdraw\n3. Back To Base\nEnter the operation number: ");
+        scanf("%hhd", &operationChoice);
+
+        switch (operationChoice)
+        {
+            case DEPOSIT:
+                deposit:
+                    puts("From deposit");
+                    break;  
+                
+            case WITHDRAW:
+                withdraw:
+                    puts("From withdraw");
+                    break;
+            
+            case BACK_TO_BASE:
+                backToBase:
+                    puts("BACK TO THE BASE");
+                    return;
+            default:
+                if(retryInput(&operationChoice, "%hhd", RULE_OPTION_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
+                {
+                    if(operationChoice == DEPOSIT)
+                        goto deposit;
+
+                    if(operationChoice == WITHDRAW)
+                        goto withdraw;
+
+                    goto backToBase;
+
+                }
+                else
+                {
+                    printf("You entered three invalid inputs\nGetting back to the base..\n");
+                }
         }
     }
 }

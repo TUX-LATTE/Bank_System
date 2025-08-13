@@ -66,28 +66,33 @@ char selectAuthenticationOption()
 
 void signUpUserAccount()
 {
-    char firstName[30];
-    char lastName[30];
-    char username[30];
-    char password[30];
-    char confirmPassword[30];
+    struct
+    {
+        char firstName[30];
+        char lastName[30];
+        char username[30];
+        char password[30];
+        // char confirmPassword[30];
+    }newUser;
+    
 
     printf("%s", "Enter your first name: ");
-    scanf("%29s", firstName);
+    scanf("%29s", newUser.firstName);
 
     printf("%s", "Enter your last name: ");
-    scanf("%29s", lastName);
+    scanf("%29s", newUser.lastName);
 
     printf("%s", "Enter your username: ");
-    scanf("%29s", username);
+    scanf("%29s", newUser.username);
 
     printf("%s", "Enter your password: ");
-    scanf("%29s", password);
+    scanf("%29s", newUser.password);
 
+    char confirmPassword[30];
     printf("%s", "Confirm your password: ");
     scanf("%29s", confirmPassword);
 
-    if(strcmp(password, confirmPassword) == 0)
+    if(strcmp(newUser.password, confirmPassword) == 0)
     {
         puts("Registration Done!");
     }
@@ -95,7 +100,7 @@ void signUpUserAccount()
     {
         char *msg = "Passwords do not match, try again: ";
         
-        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, password))
+        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, newUser.password))
         {
             puts("Registration Done!");
         }

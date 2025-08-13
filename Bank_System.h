@@ -11,11 +11,12 @@ typedef enum
     SIGN_UP,
     EXIT
 } AuthenticationOption;
+
+
 void Bank_System();
 char selectAuthenticationOption();
 void signInUserAccount();
 void signUpUserAccount();
 
 
-
-#endif
+#endif //BANK_SYSTEM.H

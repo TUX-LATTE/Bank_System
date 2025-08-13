@@ -3,11 +3,13 @@
 
 #include <stdbool.h>
 
+
 typedef enum 
 {
     RULE_AUTH_CHOICE_NUMBER,
     RULE_PASSWORD_MATCH,
 } VALIDATION_RULE;
+
 
 bool retryInput(
     void *input,
@@ -17,5 +19,6 @@ bool retryInput(
     char *msg,
     void *reference
 );
+
 
 #endif // UTILITIES_H

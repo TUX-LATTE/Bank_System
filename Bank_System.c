@@ -43,9 +43,7 @@ char selectAuthenticationOption()
     }
     else
     {
-        if(retryInput(&choiceNumber, "%hhd",
-                      (choiceNumber != 1 && choiceNumber != 2),
-                      attemptsLeft, msg))
+        if(retryInput(&choiceNumber, "%hhd", (choiceNumber == 1 || choiceNumber == 2), attemptsLeft, msg))
         {
             return choiceNumber;
         }
@@ -92,9 +90,7 @@ void signUpUserAccount()
         char *msg = "Passwords do not match, try again: ";
         unsigned char attemptsLeft = ALLOWED_ATTEMPTS;
         
-        if(retryInput(confirmPassword, "%29s",
-                      (strcmp(password, confirmPassword) != 0),
-                      attemptsLeft, msg))
+        if(retryInput(confirmPassword, "%29s", (strcmp(password, confirmPassword) == 0), attemptsLeft, msg))
         {
             puts("Registration Done!");
         }
@@ -107,27 +103,23 @@ void signUpUserAccount()
 }
 
 
-bool retryInput(void *input, char *format, bool loopContCond, char attemptsLeft, char *msg)
+bool retryInput(void *input, char *format, bool isValid, char attemptsLeft, char *msg)
 {
-    while(loopContCond && attemptsLeft > 0)
+    while (!isValid && attemptsLeft > 0)
     {
-        puts("Invalid Input, please try again: ");
-        
+        puts("Invalid Input, please try again:");
         --attemptsLeft;
 
         printf("%s (Attempts Left => %d): ", msg, attemptsLeft);
         scanf(format, input); 
+        
 
-        if (strcmp(format, "%hhd") == 0) 
+        if(isValid && attemptsLeft > 0)
         {
-            char val = *(char *)input;
-            loopContCond = !(val == 1 || val == 2);
-        }
-        else if (strcmp(format, "%29s") == 0)
-        {
-            break;
+            return isValid;
         }
     }
 
-    return !loopContCond;
+    return !isValid;
 }
+

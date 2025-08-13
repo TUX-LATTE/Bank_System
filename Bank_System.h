@@ -8,7 +8,7 @@ void Bank_System();
 char selectAuthenticationOption();
 void signInUserAccount();
 void signUpUserAccount();
-bool retryInput(void *input, char *format, bool loopContCond, char attemptsLeft, char *msg);
+bool retryInput(void *input, char *format, bool isValid, char attemptsLeft, char *msg);
 
 
 

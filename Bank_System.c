@@ -31,7 +31,6 @@ void Bank_System()
 char selectAuthenticationOption()
 {
     char choiceNumber;
-    unsigned char attemptsLeft = ALLOWED_ATTEMPTS;
     char *msg = "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\nEnter your choice number: ";
 
     printf("%s", msg);
@@ -43,7 +42,7 @@ char selectAuthenticationOption()
     }
     else
     {
-        if(retryInput(&choiceNumber, "%hhd", (choiceNumber == 1 || choiceNumber == 2), attemptsLeft, msg))
+        if(retryInput(&choiceNumber, "%hhd", RULE_AUTH_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
         {
             return choiceNumber;
         }
@@ -88,9 +87,8 @@ void signUpUserAccount()
     else
     {
         char *msg = "Passwords do not match, try again: ";
-        unsigned char attemptsLeft = ALLOWED_ATTEMPTS;
         
-        if(retryInput(confirmPassword, "%29s", (strcmp(password, confirmPassword) == 0), attemptsLeft, msg))
+        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, password))
         {
             puts("Registration Done!");
         }
@@ -103,23 +101,34 @@ void signUpUserAccount()
 }
 
 
-bool retryInput(void *input, char *format, bool isValid, char attemptsLeft, char *msg)
-{
-    while (!isValid && attemptsLeft > 0)
+bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsigned char allowedAttempts, char *msg, void *reference)
     {
-        puts("Invalid Input, please try again:");
-        --attemptsLeft;
+    unsigned char attemptsLeft = allowedAttempts;
 
-        printf("%s (Attempts Left => %d): ", msg, attemptsLeft);
-        scanf(format, input); 
-        
+    while (attemptsLeft > 0)
+    {
+        printf("%s (Attempts left => %d): ", msg, attemptsLeft);
+        scanf(format, input);
 
-        if(isValid && attemptsLeft > 0)
+        bool isValid = false;
+        switch (validationRule)
         {
-            return isValid;
+            case RULE_AUTH_CHOICE_NUMBER:
+                isValid = (*(char *)input == 1 || *(char *)input == 2);
+                break;
+            case RULE_PASSWORD_MATCH:
+                isValid = (strcmp((char *)input, (char *)reference) == 0);
+                break;
+            default:
+                break;
         }
+
+        if (isValid)
+            return true;
+
+        puts("Invalid Input, please try again!");
+        --attemptsLeft;
     }
 
-    return !isValid;
+    return false;
 }
-

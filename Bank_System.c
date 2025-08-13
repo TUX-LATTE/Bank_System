@@ -6,37 +6,43 @@
 
 void Bank_System()
 {
-    printf(
-        "========================================\n"
-        "   Welcome to the CLI Banking System\n"
-        "========================================\n"
-    );
-    
-    char choiceNumber = selectAuthenticationOption();
-    
-    switch (choiceNumber)
+    while(1)
     {
-        case 1:
-            // signInUserAccount();
-            break;
-        case 2:
-            signUpUserAccount();
-            break;
-        default:
-            printf("You entered three invalid inputs\nTerminating..\n");
-            return;
+        printf(
+            "========================================\n"
+            "   Welcome to the CLI Banking System\n"
+            "========================================\n"
+        );
+        
+        unsigned char choiceNumber = selectAuthenticationOption();
+        
+        switch (choiceNumber)
+        {
+            case 1:
+                // signInUserAccount();
+                break;
+            case 2:
+                signUpUserAccount();
+                break;
+            case 3:
+                puts("GOOD BYE!");
+                return;
+            default:
+                printf("You entered three invalid inputs\nTerminating..\n");
+                return;
+        }
     }
 }
 
 char selectAuthenticationOption()
 {
-    char choiceNumber;
-    char *msg = "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\nEnter your choice number: ";
+    unsigned char choiceNumber;
+    char *msg = "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\n3. Exit\nEnter your choice number: ";
 
     printf("%s", msg);
     scanf("%hhd", &choiceNumber);
 
-    if(choiceNumber == 1 || choiceNumber == 2)
+    if(choiceNumber == 1 || choiceNumber == 2 || choiceNumber == 3)
     {
         return choiceNumber;
     }
@@ -114,7 +120,7 @@ bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsig
         switch (validationRule)
         {
             case RULE_AUTH_CHOICE_NUMBER:
-                isValid = (*(char *)input == 1 || *(char *)input == 2);
+                isValid = (*(char *)input == 1 || *(char *)input == 2 || *(char *)input == 3);
                 break;
             case RULE_PASSWORD_MATCH:
                 isValid = (strcmp((char *)input, (char *)reference) == 0);
@@ -132,3 +138,6 @@ bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsig
 
     return false;
 }
+
+
+//branch feature/exit

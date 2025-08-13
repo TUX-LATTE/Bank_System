@@ -4,6 +4,13 @@
 
 #include <stdbool.h>
 
+
+typedef enum 
+{
+    SIGN_IN = 1,
+    SIGN_UP,
+    EXIT
+} AuthenticationOption;
 void Bank_System();
 char selectAuthenticationOption();
 void signInUserAccount();

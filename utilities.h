@@ -3,7 +3,8 @@
 
 #include <stdbool.h>
 
-typedef enum {
+typedef enum 
+{
     RULE_AUTH_CHOICE_NUMBER,
     RULE_PASSWORD_MATCH,
 } VALIDATION_RULE;

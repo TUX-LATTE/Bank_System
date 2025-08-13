@@ -15,17 +15,17 @@ void Bank_System()
             "========================================\n"
         );
         
-        unsigned char choiceNumber = selectAuthenticationOption();
+        unsigned char choice = selectAuthenticationOption();
         
-        switch (choiceNumber)
+        switch (choice)
         {
-            case 1:
+            case SIGN_IN:
                 // signInUserAccount();
                 break;
-            case 2:
+            case SIGN_UP:
                 signUpUserAccount();
                 break;
-            case 3:
+            case EXIT:
                 puts("GOOD BYE!");
                 return;
             default:

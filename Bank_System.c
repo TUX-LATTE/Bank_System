@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "Bank_System.h"
 
@@ -30,33 +31,24 @@ void Bank_System()
 char selectAuthenticationOption()
 {
     char choiceNumber;
-    unsigned char attemptsLeft = ALLOWED_ATTEMPTS;
+    char *msg = "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\nEnter your choice number: ";
 
-    while (attemptsLeft > 0)
+    printf("%s", msg);
+    scanf("%hhd", &choiceNumber);
+
+    if(choiceNumber == 1 || choiceNumber == 2)
     {
-        printf(
-            "Please choose an option:\n"
-            "1. Sign In (Existing Users)\n"
-            "2. Sign Up (New Users)\n"
-            "Enter your choice number: "
-        );
-
-        scanf("%hhd", &choiceNumber);
-
-        if (choiceNumber == 1 || choiceNumber == 2)
+        return choiceNumber;
+    }
+    else
+    {
+        if(retryInput(&choiceNumber, "%hhd", RULE_AUTH_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
         {
             return choiceNumber;
         }
-
-        attemptsLeft--;
-
-        if (attemptsLeft > 0)
-        {
-            printf("\nInvalid input! Try again (attempts left: %u)\n\n", attemptsLeft);
-        }
     }
 
-    return 0; // FAILED
+    return -1; // Failed!
 }
 
 
@@ -76,7 +68,7 @@ void signUpUserAccount()
     printf("%s", "Enter your first name: ");
     scanf("%29s", firstName);
 
-    printf("%s", "Enter your last nane: ");
+    printf("%s", "Enter your last name: ");
     scanf("%29s", lastName);
 
     printf("%s", "Enter your username: ");
@@ -94,7 +86,49 @@ void signUpUserAccount()
     }
     else
     {
-        puts("Passwords do not match");
-        return;
+        char *msg = "Passwords do not match, try again: ";
+        
+        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, password))
+        {
+            puts("Registration Done!");
+        }
+        else
+        {
+            printf("You entered three invalid inputs\nTerminating..\n");
+            return;
+        }
     }
+}
+
+
+bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsigned char allowedAttempts, char *msg, void *reference)
+    {
+    unsigned char attemptsLeft = allowedAttempts;
+
+    while (attemptsLeft > 0)
+    {
+        printf("%s (Attempts left => %d): ", msg, attemptsLeft);
+        scanf(format, input);
+
+        bool isValid = false;
+        switch (validationRule)
+        {
+            case RULE_AUTH_CHOICE_NUMBER:
+                isValid = (*(char *)input == 1 || *(char *)input == 2);
+                break;
+            case RULE_PASSWORD_MATCH:
+                isValid = (strcmp((char *)input, (char *)reference) == 0);
+                break;
+            default:
+                break;
+        }
+
+        if (isValid)
+            return true;
+
+        puts("Invalid Input, please try again!");
+        --attemptsLeft;
+    }
+
+    return false;
 }

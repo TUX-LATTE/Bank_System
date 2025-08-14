@@ -18,6 +18,7 @@ typedef enum
 {
     DEPOSIT = 1,
     WITHDRAW,
+    CHECK_BALANCE,
     BACK_TO_BASE,
 } BANK_OPERATION;
 

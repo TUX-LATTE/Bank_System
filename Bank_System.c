@@ -49,7 +49,7 @@ char selectAuthenticationOption()
     }
     else
     {
-        if(retryInput(&choiceNumber, "%hhd", RULE_OPTION_CHOICE_NUMBER, NULL))
+        if(retryInput(&choiceNumber, "%hhd", RULE_AUTH_CHOICE_NUMBER, NULL))
         {
             return choiceNumber;
         }
@@ -122,26 +122,49 @@ void bankOperations()
     while(1)
     {
         char operationChoice;
+        double transactionAmount;
 
-        printf("Select Operation:\n1. Deposit\n2. Withdraw\n3. Back To Base\nEnter the operation number: ");
+        printf("Select Operation:\n1. Deposit\n2. Withdraw\n3. Check Balance\n4. Back To Base\nEnter the operation number: ");
         scanf("%hhd", &operationChoice);
 
         switch (operationChoice)
         {
+            
             case DEPOSIT:
                 deposit:
-                    puts("From deposit");
+                    transactionAmount = 0;
+
+                    printf("Enter deposit amount: ");
+                    scanf("%lf", &transactionAmount);
+
+                    accountBalance += transactionAmount;
+
                     break;  
                 
             case WITHDRAW:
                 withdraw:
-                    puts("From withdraw");
+                    transactionAmount = 0;
+
+                    printf("Enter withdrawal amount: ");
+                    scanf("%lf", &transactionAmount);
+
+                    if(accountBalance >= transactionAmount && transactionAmount >= 0)
+                        accountBalance -= transactionAmount;
+                    else
+                        puts("Insufficient funds. Please enter a smaller amount.");
+
+                    break;
+
+            case CHECK_BALANCE:
+                checkBalance:
+                    printf("$\n%.2f\n", accountBalance);
                     break;
             
             case BACK_TO_BASE:
                 backToBase:
                     puts("BACK TO THE BASE");
                     return;
+
             default:
                 if(retryInput(&operationChoice, "%hhd", RULE_OPTION_CHOICE_NUMBER, NULL))
                 {
@@ -151,9 +174,14 @@ void bankOperations()
                     if(operationChoice == WITHDRAW)
                         goto withdraw;
 
+
+                    if(operationChoice == CHECK_BALANCE)
+                        goto checkBalance;
+
                     goto backToBase;
 
                 }
+
                 else
                 {
                     printf("You entered three invalid inputs\nGetting back to the base..\n");

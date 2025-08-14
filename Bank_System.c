@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
 #include "Bank_System.h"
 #include "utilities.h"
 
@@ -29,7 +25,7 @@ void Bank_System()
                 puts("GOOD BYE!");
                 return;
             default:
-                printf("You entered three invalid inputs\nTerminating..\n");
+                puts("You entered three invalid inputs\nTerminating..\n");
                 return;
         }
     }
@@ -55,7 +51,7 @@ char selectAuthenticationOption()
         }
     }
 
-    return -1; // Failed!
+    return FAILED;
 }
 
 
@@ -107,7 +103,7 @@ void signUpUserAccount()
         }
         else
         {
-            printf("You entered three invalid inputs\nTerminating..\n");
+            puts("You entered three invalid inputs\nTerminating..\n");
             return;
         }
     }
@@ -122,9 +118,9 @@ void bankOperations()
     while(1)
     {
         char operationChoice;
-        double transactionAmount;
+        double transactionAmount; //Move it to the suitable place later
 
-        printf("Select Operation:\n1. Deposit\n2. Withdraw\n3. Check Balance\n4. Back To Base\nEnter the operation number: ");
+        printf("%s", "Select Operation:\n1. Deposit\n2. Withdraw\n3. Check Balance\n4. Back To Base\nEnter the operation number: ");
         scanf("%hhd", &operationChoice);
 
         switch (operationChoice)
@@ -134,7 +130,7 @@ void bankOperations()
                 deposit:
                     transactionAmount = 0;
 
-                    printf("Enter deposit amount: ");
+                    printf("%s", "Enter deposit amount: ");
                     scanf("%lf", &transactionAmount);
 
                     accountBalance += transactionAmount;
@@ -145,7 +141,7 @@ void bankOperations()
                 withdraw:
                     transactionAmount = 0;
 
-                    printf("Enter withdrawal amount: ");
+                    printf("%s", "Enter withdrawal amount: ");
                     scanf("%lf", &transactionAmount);
 
                     if(accountBalance >= transactionAmount && transactionAmount >= 0)
@@ -184,7 +180,7 @@ void bankOperations()
 
                 else
                 {
-                    printf("You entered three invalid inputs\nGetting back to the base..\n");
+                    puts("You entered three invalid inputs\nGetting back to the base..\n");
                 }
         }
     }

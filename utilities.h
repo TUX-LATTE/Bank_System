@@ -1,6 +1,10 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#define FAILED -1
+#define MSG_RETRY "Invalid input, please try again"
+#define ALLOWED_ATTEMPTS 2 //The first attempt + two retry attempts = three attempts
+
 #include <stdbool.h>
 
 

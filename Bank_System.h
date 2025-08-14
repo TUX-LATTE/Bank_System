@@ -1,10 +1,10 @@
 #ifndef BANK_SYSTEM_H
 #define BANK_SYSTEM_H
 
-#define ALLOWED_ATTEMPTS 2 //The first attempt + two retry attempts = three attempts
-#define MSG_RETRY "Invalid input, please try again"
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 
 typedef enum 

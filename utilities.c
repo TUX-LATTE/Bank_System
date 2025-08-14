@@ -1,7 +1,6 @@
 #include "utilities.h"
 #include "Bank_System.h"
-#include <stdio.h> 
-#include <string.h>  
+
 
 bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, void *reference)
 {

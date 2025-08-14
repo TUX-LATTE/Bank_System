@@ -1,6 +1,7 @@
 #include "Bank_System.h"
 #include "utilities.h"
 
+
 // Main function to run the banking system loop
 void Bank_System()
 {
@@ -32,6 +33,7 @@ void Bank_System()
     }
 }
 
+
 // Function to display authentication options and get user input
 char selectAuthenticationOption()
 {
@@ -54,6 +56,13 @@ char selectAuthenticationOption()
 
     return FAILED;
 }
+
+
+// void signInUserAccount()
+// {
+
+// }
+
 
 // Function to handle user account sign-up
 void signUpUserAccount()
@@ -87,8 +96,10 @@ void signUpUserAccount()
     if(strcmp(newUser.password, confirmPassword) == 0)
     {
         registerationSuccess:
-            puts("Registration Done!");
-            bankOperations();
+        saveData(newUser.firstName, newUser.lastName, newUser.username, newUser.password);
+        puts("Registration Done!\nGoing to sign in page\n");
+        // signInUserAccount();
+        // bankOperations(); (MOVE IT TO signInUserAccount())
     }
     else
     {
@@ -100,10 +111,10 @@ void signUpUserAccount()
         else
         {
             puts("You entered three invalid inputs\nTerminating..\n");
-            return;
         }
     }
 }
+
 
 // Function to handle banking operations like deposit, withdraw, and check balance
 void bankOperations()

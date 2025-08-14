@@ -1,6 +1,8 @@
 #ifndef BANK_SYSTEM_H
 #define BANK_SYSTEM_H
 
+#include "file_store.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>

@@ -35,12 +35,12 @@ void Bank_System()
     }
 }
 
+
 char selectAuthenticationOption()
 {
     unsigned char choiceNumber;
-    char *msg = "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\n3. Exit\nEnter your choice number: ";
 
-    printf("%s", msg);
+    printf("%s", "Please choose an option:\n1. Sign In (Existing Users)\n2. Sign Up (New Users)\n3. Exit\nEnter your choice number: ");
     scanf("%hhd", &choiceNumber);
 
     if(choiceNumber == 1 || choiceNumber == 2 || choiceNumber == 3)
@@ -49,7 +49,7 @@ char selectAuthenticationOption()
     }
     else
     {
-        if(retryInput(&choiceNumber, "%hhd", RULE_OPTION_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
+        if(retryInput(&choiceNumber, "%hhd", RULE_OPTION_CHOICE_NUMBER, NULL))
         {
             return choiceNumber;
         }
@@ -100,9 +100,8 @@ void signUpUserAccount()
     }
     else
     {
-        char *msg = "Passwords do not match, try again: ";
         
-        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, ALLOWED_ATTEMPTS, msg, newUser.password))
+        if(retryInput(confirmPassword, "%29s", RULE_PASSWORD_MATCH, newUser.password))
         {
             goto registerationSuccess;
         }
@@ -123,7 +122,6 @@ void bankOperations()
     while(1)
     {
         char operationChoice;
-        char *msg = "Invalid option, please try again";
 
         printf("Select Operation:\n1. Deposit\n2. Withdraw\n3. Back To Base\nEnter the operation number: ");
         scanf("%hhd", &operationChoice);
@@ -145,7 +143,7 @@ void bankOperations()
                     puts("BACK TO THE BASE");
                     return;
             default:
-                if(retryInput(&operationChoice, "%hhd", RULE_OPTION_CHOICE_NUMBER, ALLOWED_ATTEMPTS, msg, NULL))
+                if(retryInput(&operationChoice, "%hhd", RULE_OPTION_CHOICE_NUMBER, NULL))
                 {
                     if(operationChoice == DEPOSIT)
                         goto deposit;

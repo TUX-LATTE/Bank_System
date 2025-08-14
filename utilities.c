@@ -1,14 +1,15 @@
 #include "utilities.h"
+#include "Bank_System.h"
 #include <stdio.h> 
 #include <string.h>  
 
-bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, unsigned char allowedAttempts, char *msg, void *reference)
+bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, void *reference)
 {
-    unsigned char attemptsLeft = allowedAttempts;
+    unsigned char attemptsLeft = ALLOWED_ATTEMPTS;
 
     while (attemptsLeft > 0)
     {
-        printf("%s (Attempts left => %d): ", msg, attemptsLeft);
+        printf("%s (Attempts left => %d): ", MSG_RETRY, attemptsLeft);
         scanf(format, input);
 
         bool isValid = false;

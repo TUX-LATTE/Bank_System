@@ -15,8 +15,6 @@ bool retryInput(
     void *input,
     char *format,
     VALIDATION_RULE validationRule,
-    unsigned char allowedAttempts,
-    char *msg,
     void *reference
 );
 

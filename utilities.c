@@ -1,7 +1,7 @@
 #include "utilities.h"
 #include "Bank_System.h"
 
-
+// Function to retry user input with validation rules
 bool retryInput(void *input, char *format, VALIDATION_RULE validationRule, void *reference)
 {
     unsigned char attemptsLeft = ALLOWED_ATTEMPTS;

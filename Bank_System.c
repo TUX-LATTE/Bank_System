@@ -1,6 +1,7 @@
 #include "Bank_System.h"
 #include "utilities.h"
 
+// Main function to run the banking system loop
 void Bank_System()
 {
     while(1)
@@ -31,7 +32,7 @@ void Bank_System()
     }
 }
 
-
+// Function to display authentication options and get user input
 char selectAuthenticationOption()
 {
     unsigned char choiceNumber;
@@ -54,12 +55,7 @@ char selectAuthenticationOption()
     return FAILED;
 }
 
-
-// void signInUserAccount()
-// {
-// }
-
-
+// Function to handle user account sign-up
 void signUpUserAccount()
 {
     struct
@@ -109,7 +105,7 @@ void signUpUserAccount()
     }
 }
 
-
+// Function to handle banking operations like deposit, withdraw, and check balance
 void bankOperations()
 {
     puts("\n");

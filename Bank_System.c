@@ -1,5 +1,4 @@
 #include "Bank_System.h"
-#include "utilities.h"
 
 
 // Main function to run the banking system loop
@@ -96,10 +95,10 @@ void signUpUserAccount()
     if(strcmp(newUser.password, confirmPassword) == 0)
     {
         registerationSuccess:
-        saveData(newUser.firstName, newUser.lastName, newUser.username, newUser.password);
-        puts("Registration Done!\nGoing to sign in page\n");
-        // signInUserAccount();
-        // bankOperations(); (MOVE IT TO signInUserAccount())
+            saveData(newUser.firstName, newUser.lastName, newUser.username, newUser.password);
+            puts("Registration Done!\nGoing to sign in page\n");
+            // signInUserAccount();
+            // bankOperations(); (MOVE IT TO signInUserAccount())
     }
     else
     {

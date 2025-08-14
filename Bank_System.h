@@ -2,6 +2,7 @@
 #define BANK_SYSTEM_H
 
 #include "file_store.h"
+#include "utilities.h"
 
 #include <stdbool.h>
 #include <stdio.h>
